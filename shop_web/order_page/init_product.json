@@ -3,10 +3,10 @@
         "model": "order_page.product",
         "pk": 1,
         "fields": {
-            "stock_pcs": "10",
-            "price": "10",
+            "stock_pcs": "6",
+            "price": "150",
             "shop_id": "um",
-            "vip": "True"
+            "vip": "False"
         }
     },
     {
@@ -14,8 +14,58 @@
         "pk": 2,
         "fields": {
             "stock_pcs": "10",
-            "price": "10",
+            "price": "110",
+            "shop_id": "ms",
+            "vip": "False"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 3,
+        "fields": {
+            "stock_pcs": "20",
+            "price": "900",
+            "shop_id": "ps",
+            "vip": "False"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 4,
+        "fields": {
+            "stock_pcs": "2",
+            "price": "1899",
+            "shop_id": "ps",
+            "vip": "True"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 5,
+        "fields": {
+            "stock_pcs": "8",
+            "price": "35",
+            "shop_id": "ms",
+            "vip": "False"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 6,
+        "fields": {
+            "stock_pcs": "5",
+            "price": "60",
             "shop_id": "um",
+            "vip": "False"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 7,
+        "fields": {
+            "stock_pcs": "5",
+            "price": "800",
+            "shop_id": "ps",
             "vip": "True"
         }
     }
