@@ -1,0 +1,22 @@
+[
+    {
+        "model": "order_page.product",
+        "pk": 1,
+        "fields": {
+            "stock_pcs": "10",
+            "price": "10",
+            "shop_id": "um",
+            "vip": "True"
+        }
+    },
+    {
+        "model": "order_page.product",
+        "pk": 2,
+        "fields": {
+            "stock_pcs": "10",
+            "price": "10",
+            "shop_id": "um",
+            "vip": "True"
+        }
+    }
+]
