@@ -24,8 +24,6 @@ class Order(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, verbose_name=u'商品')
     qty = models.PositiveIntegerField(verbose_name=u'購買數量')
-    price = models.PositiveIntegerField(verbose_name=u'商品單價')
-    shop_id = models.CharField(max_length=5, verbose_name=u'商品所屬館別')
     customer_id = models.PositiveIntegerField(verbose_name=u'Customer ID')
 
     class Meta:
@@ -35,7 +33,13 @@ class Order(models.Model):
     def __str__(self):
         return u'訂單id(%s)' % self.id
 
+    def price(self):
+        return self.product.price
+    price.short_description = u'商品單價'
+
+    def shop_id(self):
+        return self.product.shop_id
+    shop_id.short_description = u'商品所屬館別'
+
     def save(self, *args, **kwargs):
-        self.price = self.product.price
-        self.shop_id = self.product.shop_id
         super(Order, self).save(*args, **kwargs)
