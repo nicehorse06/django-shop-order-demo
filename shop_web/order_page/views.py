@@ -11,13 +11,21 @@ class OrderView(View):
         self.form = OrderPostForm()
         self.product_list = Product.objects.all()
         self.order_list = Order.objects.all()
+        self.top_sell_id_list = Order.objects.top()
         method = self.request.POST.get('_method', '').lower()
         if method == 'delete':
             return self.delete(*args, **kwargs)
         return super(OrderView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
-        return render(request, self.template_name, {"form": self.form, 'product_list': self.product_list, 'order_list': self.order_list})
+        context = {
+            'form': self.form,
+            'product_list': self.product_list,
+            'order_list': self.order_list,
+            'top_sell_id_list': self.top_sell_id_list,
+        }
+
+        return render(request, self.template_name, context)
 
     def post(self, request):
         this_form = OrderPostForm(request.POST)

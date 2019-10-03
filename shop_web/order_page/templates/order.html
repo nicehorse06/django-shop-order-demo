@@ -66,4 +66,13 @@
         {% endfor %}
     </tbody>
 </table>
+<div>Top3</div>
+<table>
+    {% for this_id in top_sell_id_list %}
+    <tr>
+        <td>第{{ forloop.counter }}名的銷售產品id: </td>
+        <td>{{ this_id }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
