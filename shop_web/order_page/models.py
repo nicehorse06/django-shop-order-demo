@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 # 目前推測要有vip身份才能購買vip商品
 
@@ -23,6 +24,10 @@ class OrdersManager(models.Manager):
     def get_queryset(self):
         # 隱藏刪除的項
         return super().get_queryset().filter(is_delete=False)
+
+    def top(self, top_num=3):
+        # 回傳前top_num大的訂購數量的product number
+        return self.values('product_id').annotate(Sum('qty')).order_by('-qty__sum').values_list('product_id', flat=True)[:top_num]
 
 
 class Order(models.Model):
