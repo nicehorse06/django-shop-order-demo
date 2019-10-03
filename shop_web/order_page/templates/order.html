@@ -3,17 +3,17 @@
 {% block title %}Umart{% endblock %}
 
 {% block input %}
-{% if sent %}
+
 <h1>status successfully</h1>
 
-{% else %}
+
 <h1>status fail</h1>
 <form action="." method="post">
     {{ form.as_p }}
     {% csrf_token %}
     <input type="submit" value="+">
 </form>
-{% endif %}
+
 <form method="post">
     Name <input type="text" name="title" autocomplete="off" required value="{{ movie.title }}">
     Year <input type="text" name="year" autocomplete="off" required value="{{ movie.year }}">
