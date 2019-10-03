@@ -6,11 +6,12 @@ from .models import Product, Order
 
 class OrderView(View):
     template_name = 'order.html'
+    product_list = Product.objects.all()
 
     def get(self, request):
         form = OrderPostForm()
 
-        return render(request, self.template_name, {"form": form})
+        return render(request, self.template_name, {"form": form, 'product_list': self.product_list})
 
     def post(self, request):
         form = OrderPostForm(request.POST)
@@ -23,4 +24,4 @@ class OrderView(View):
                 customer_id=cd['customer_id'],
             )
             this_order.save()
-        return render(request, self.template_name, {"form": form})
+        return render(request, self.template_name, {"form": form, 'product_list': self.product_list})

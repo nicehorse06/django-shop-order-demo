@@ -2,11 +2,9 @@
 
 {% block title %}Umart{% endblock %}
 
-{% block input %}
+{% block content %}
 
 <h1>status successfully</h1>
-
-
 <h1>status fail</h1>
 <form action="." method="post">
     {{ form.as_p }}
@@ -14,21 +12,28 @@
     <input type="submit" value="+">
 </form>
 
-<form method="post">
-    Name <input type="text" name="title" autocomplete="off" required value="{{ movie.title }}">
-    Year <input type="text" name="year" autocomplete="off" required value="{{ movie.year }}">
-    <input class="btn" type="submit" name="submit" value="Update">
-</form>
-{% endblock %}
-
-{% block product %}
-<div>product</div>
-{% endblock %}
-
-{% block order %}
-<div>order</div>
-{% endblock %}
-
-{% block top %}
-<div>top</div>
+<div>商品列表</div>
+<table>
+    <thead>
+        <tr>
+            <th>product_id</th>
+            <th>stock_pcs</th>
+            <th>price</th>
+            <th>shop_id</th>
+            <th>vip</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for this_product in product_list %}
+        <tr>
+            <td>{{ this_product.product_id }}</td>
+            <td>{{ this_product.stock_pcs }}</td>
+            <td>{{ this_product.price }}</td>
+            <td>{{ this_product.shop_id }}</td>
+            <td>{{ this_product.vip }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div>訂單紀錄</div>
 {% endblock %}
