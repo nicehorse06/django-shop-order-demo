@@ -5,8 +5,8 @@ from .models import Product, Order
 
 
 class OrderView(View):
-    template_name = 'order.html'
 
+    # 所有方法執行前都會做一次dispatch
     def dispatch(self, *args, **kwargs):
         self.form = OrderPostForm()
         self.product_list = Product.objects.all()
@@ -25,7 +25,7 @@ class OrderView(View):
             'top_sell_id_list': self.top_sell_id_list,
         }
 
-        return render(request, self.template_name, context)
+        return render(request, 'order.html', context)
 
     def post(self, request):
         this_form = OrderPostForm(request.POST)
