@@ -3,9 +3,6 @@
 {% block title %}Umart{% endblock %}
 
 {% block content %}
-
-<h1>status successfully</h1>
-<h1>status fail</h1>
 <form action="." method="post">
     {{ form.as_p }}
     {% csrf_token %}
@@ -57,7 +54,14 @@
             <td>{{ this_order.product.price }}</td>
             <td>{{ this_order.product.shop_id }}</td>
             <td>{{ this_order.customer_id }}</td>
-            <td><button>-</button></td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" id="order_id" name="order_id" value={{ this_order.id }}>
+                    <input type="submit" value="-">
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

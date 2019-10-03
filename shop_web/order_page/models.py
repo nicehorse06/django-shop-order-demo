@@ -19,12 +19,21 @@ class Product(models.Model):
         return u'商品id(%d)館別(%s)' % (self.product_id, self.shop_id)
 
 
+class OrdersManager(models.Manager):
+    def get_queryset(self):
+        # 隱藏刪除的項
+        return super().get_queryset().filter(is_delete=False)
+
+
 class Order(models.Model):
     id = models.AutoField(primary_key=True, verbose_name=u'訂單id')
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, verbose_name=u'商品')
     qty = models.PositiveIntegerField(verbose_name=u'購買數量')
     customer_id = models.PositiveIntegerField(verbose_name=u'Customer ID')
+    is_delete = models.BooleanField(default=False, verbose_name=u'是否刪除')
+
+    objects = OrdersManager()
 
     class Meta:
         verbose_name = u'訂單'
