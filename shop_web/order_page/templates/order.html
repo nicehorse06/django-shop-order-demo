@@ -36,4 +36,30 @@
     </tbody>
 </table>
 <div>訂單紀錄</div>
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>product_id</th>
+            <th>qty</th>
+            <th>price</th>
+            <th>shop_id</th>
+            <th>Customer ID</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for this_order in order_list %}
+        <tr>
+            <td>{{ this_order.id }}</td>
+            <td>{{ this_order.product_id }}</td>
+            <td>{{ this_order.qty }}</td>
+            <td>{{ this_order.product.price }}</td>
+            <td>{{ this_order.product.shop_id }}</td>
+            <td>{{ this_order.customer_id }}</td>
+            <td><button>-</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
