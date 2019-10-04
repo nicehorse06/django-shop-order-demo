@@ -3,17 +3,27 @@
 {% block title %}Umart{% endblock %}
 
 {% block content %}
-{{ info_message }}
-{{ error_message }}
+{% if error_message %}
+<div class="alert alert-danger" role="alert">
+    {{ error_message }}
+</div>
+{% endif %}
+
+{% if info_message %}
+<div class="alert alert-info" role="alert">
+    {{ info_message }}
+</div>
+{% endif %}
+
 <form action="." method="post">
-    {{ form.as_p }}
+    {{ form }}
     {% csrf_token %}
-    <input type="submit" value="+">
+    <input class='add' type="submit" value="+">
 </form>
 
-<div>商品列表</div>
-<table>
-    <thead>
+<h5>商品列表</h5>
+<table class="table">
+    <thead class="thead-dark">
         <tr>
             <th>product_id</th>
             <th>stock_pcs</th>
@@ -34,9 +44,9 @@
         {% endfor %}
     </tbody>
 </table>
-<div>訂單紀錄</div>
-<table>
-    <thead>
+<h5>訂單紀錄列表</h5>
+<table class="table">
+    <thead class="thead-dark">
         <tr>
             <th>Order ID</th>
             <th>product_id</th>
@@ -44,7 +54,7 @@
             <th>price</th>
             <th>shop_id</th>
             <th>Customer ID</th>
-            <th></th>
+            <th>取消訂單</th>
         </tr>
     </thead>
     <tbody>
@@ -61,15 +71,15 @@
                     {% csrf_token %}
                     <input type="hidden" name="_method" value="delete">
                     <input type="hidden" id="order_id" name="order_id" value={{ this_order.id }}>
-                    <input type="submit" value="-">
+                    <input class='cancel' type="submit" value="-">
                 </form>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<div>Top3</div>
-<table>
+<h5>Top3產品列表</h5>
+<table class="table">
     {% for this_id in top_sell_id_list %}
     <tr>
         <td>第{{ forloop.counter }}名的銷售產品id: </td>
