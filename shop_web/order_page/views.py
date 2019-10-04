@@ -10,19 +10,22 @@ def add_order_check(function):
     def decorator(*args, **kwargs):
         this_request = args[1]
         error_message = ''
-        this_product_id = this_request.POST.get("product_id")
-        this_product = Product.objects.get(product_id=this_product_id)
+        this_form = OrderPostForm(this_request.POST)
+        if this_form.is_valid():
+            cleaned_data = this_form.cleaned_data
+            this_product_id = cleaned_data.get("product_id")
+            this_product = Product.objects.get(product_id=this_product_id)
 
-        this_quantity = this_request.POST.get("quantity", False)
+            is_vip = cleaned_data.get("is_vip")
 
-        is_vip = this_request.POST.get("is_vip", False)
+            order_quantity = cleaned_data.get("quantity")
+            if not this_product.order_vip_check(is_vip):
+                error_message = '只有VIP身份才購買此產品'
 
-        order_quantity = this_request.POST.get("quantity", 0)
-        if not this_product.order_vip_check(is_vip):
-            error_message = '只有VIP身份才購買此產品'
+            if not error_message and not this_product.order_qty_check(order_quantity):
+                error_message = '訂購數量不能大於庫存量'
 
-        if not error_message and not this_product.order_qty_check(order_quantity):
-            error_message = '訂購數量不能大於庫存量'
+            kwargs['cleaned_data'] = cleaned_data
 
         print(error_message)
 
@@ -61,26 +64,15 @@ class OrderView(View):
     @add_order_check
     def post(self, request, *args, **kwargs):
         self.error_message = kwargs.get('error_message', '')
+        # 如果有錯誤訊息就不處理Order
         if not self.error_message:
-            this_form = OrderPostForm(request.POST)
-            if this_form.is_valid():
-                # 如果form中的資料皆合法則is_valid為True，cleaned_data，如果驗證失敗form.cleaned_data只會有驗證通過的數據
-                cd = this_form.cleaned_data
-
-                this_order = Order(
-                    product_id=cd['product_id'],
-                    qty=cd['quantity'],
-                    customer_id=cd['customer_id'],
-                )
-
-                # # todo 這段要加到decarator
-                # this_product = this_order.product
-
-                # # 重新計算庫存
-                # this_product.stock_pcs = this_product.stock_pcs - this_order.qty
-                # this_product.save()
-
-                this_order.save()
+            cleaned_data = kwargs.get('cleaned_data', {})
+            this_order = Order(
+                product_id=cleaned_data['product_id'],
+                qty=cleaned_data['quantity'],
+                customer_id=cleaned_data['customer_id'],
+            )
+            this_order.save()
         return self.get(request)
 
     def delete(self, request):
