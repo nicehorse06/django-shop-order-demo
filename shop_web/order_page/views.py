@@ -40,6 +40,7 @@ class OrderView(View):
 
     # 所有方法執行前都會做一次dispatch
     def dispatch(self, request):
+        self.info_message = ''
         self.error_message = ''
         self.form = OrderPostForm()
         self.product_list = Product.objects.all()
@@ -57,6 +58,7 @@ class OrderView(View):
             'order_list': self.order_list,
             'top_sell_id_list': self.top_sell_id_list,
             'error_message': self.error_message,
+            'info_message': self.info_message,
         }
 
         return render(request, 'order.html', context)
@@ -67,12 +69,19 @@ class OrderView(View):
         # 如果有錯誤訊息就不處理Order
         if not self.error_message:
             cleaned_data = kwargs.get('cleaned_data', {})
+            # 創建Order
             this_order = Order(
                 product_id=cleaned_data['product_id'],
                 qty=cleaned_data['quantity'],
                 customer_id=cleaned_data['customer_id'],
             )
             this_order.save()
+
+            # 計算庫存
+            this_product = this_order.product
+            this_product.stock_pcs -= this_order.qty
+            this_product.save()
+
         return self.get(request)
 
     def delete(self, request):
