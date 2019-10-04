@@ -23,7 +23,7 @@ def add_order_check(function):
                 error_message = '只有VIP身份才購買此產品'
 
             if not error_message and not this_product.order_qty_check(order_quantity):
-                error_message = '訂購數量不能大於庫存量'
+                error_message = '訂購數量大於庫存量，貨源不足'
 
             kwargs['cleaned_data'] = cleaned_data
 
@@ -94,6 +94,9 @@ class OrderView(View):
 
             # 計算庫存
             this_product = this_delete_order.product
+            if this_product.stock_pcs == 0:
+                # 刪除訂單,庫存從0變回有值則提示商品到貨
+                self.info_message = '有新商品(id:%d)到貨' % this_product.product_id
             this_product.stock_pcs += this_delete_order.qty
             this_product.save()
 
