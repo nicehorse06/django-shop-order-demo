@@ -19,6 +19,19 @@ class Product(models.Model):
     def __str__(self):
         return u'商品id(%d)館別(%s)' % (self.product_id, self.shop_id)
 
+    def order_vip_check(self, order_vip):
+        if self.vip:
+            if not order_vip:
+                # 商品為VIP，但order非VIP身份時驗失敗
+                return False
+        return True
+
+    def order_qty_check(self, order_qty):
+        if self.stock_pcs < int(order_qty):
+            # 數量不足
+            return False
+        return True
+
 
 class OrdersManager(models.Manager):
     def get_queryset(self):

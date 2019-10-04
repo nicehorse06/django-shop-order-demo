@@ -3,6 +3,7 @@
 {% block title %}Umart{% endblock %}
 
 {% block content %}
+{{ error_message }}
 <form action="." method="post">
     {{ form.as_p }}
     {% csrf_token %}
