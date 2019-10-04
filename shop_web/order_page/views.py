@@ -88,8 +88,16 @@ class OrderView(View):
         this_order_id = request.POST.get("order_id", "")
         this_delete_order = Order.objects.filter(id=this_order_id).first()
         if this_delete_order:
+            # 標記刪除的Order
             this_delete_order.is_delete = True
             this_delete_order.save()
+
+            # 計算庫存
+            this_product = this_delete_order.product
+            this_product.stock_pcs += this_delete_order.qty
+            this_product.save()
+
             self.order_list = Order.objects.all()
+            self.product_list = Product.objects.all()
 
         return self.get(request)
