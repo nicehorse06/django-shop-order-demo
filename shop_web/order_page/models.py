@@ -1,9 +1,6 @@
 from django.db import models
 from django.db.models import Sum
 
-# 目前推測要有vip身份才能購買vip商品
-
-
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True, verbose_name=u'商品id')
     stock_pcs = models.PositiveIntegerField(verbose_name=u'商品庫存數量')
