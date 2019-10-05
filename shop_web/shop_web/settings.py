@@ -120,10 +120,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#redis
-BROKER_URL = 'redis://localhost:6379' 
-CELERY_RESULT_BACKEND = 'redis://localhost:6379' 
-CELERY_ACCEPT_CONTENT = ['application/json'] 
-CELERY_TASK_SERIALIZER = 'json' 
-CELERY_RESULT_SERIALIZER = 'json' 
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
+# redis
+# -*- coding: utf-8 -*-
+BROKER_URL = 'redis://127.0.0.1:6379'               # 指定 Broker
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'  # 指定 Backend
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE

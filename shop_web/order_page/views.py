@@ -1,4 +1,6 @@
+import csv
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.views import View
 from .forms import OrderPostForm
 from .models import Product, Order
@@ -105,8 +107,8 @@ class OrderView(View):
 
         return self.get(request)
 
-import csv
-# todo 以下範例可下載csv
+
+# todo 以下範例可下載csv，等celery設定成功，開始實做
 def some_view(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
@@ -114,6 +116,7 @@ def some_view(request):
 
     writer = csv.writer(response)
     writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    writer.writerow(['Second row', 'A', 'B', 'C',
+                     '"Testing"', "Here's a quote"])
 
     return response

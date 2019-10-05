@@ -2,9 +2,13 @@
 
 * 如果在makemigrations時會出錯，需把urls.py裡面的view引入註解掉再執行
     * todo 待解決
+* 目前celery_app吃不到settings裡面的資料，暫時把redis的設定寫死到裡面
+    * todo
 
 ### 初始化所有資料
 * `python manage.py loaddata */fixtures/initial_*`
+* celery: `python shop_web/celery_app.py `
+* 啟動redis:`redis-server`
 
 ## 完成
 * 加入訂單,訂單成立需檢查是否符合vip身份,並確認商品庫存數量(身份和庫存檢查限用decorator實作)
