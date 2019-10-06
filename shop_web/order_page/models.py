@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Sum
 
+
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True, verbose_name=u'商品id')
     stock_pcs = models.PositiveIntegerField(verbose_name=u'商品庫存數量')
@@ -36,7 +37,7 @@ class OrdersManager(models.Manager):
         return super().get_queryset().filter(is_delete=False)
 
     def top(self, top_num=3):
-        # 回傳前top_num大的訂購數量的product number
+        # 回傳前3大的訂購數量的product number
         return self.values('product_id').annotate(Sum('qty')).order_by('-qty__sum').values_list('product_id', flat=True)[:top_num]
 
 
@@ -65,5 +66,19 @@ class Order(models.Model):
         return self.product.shop_id
     shop_id.short_description = u'商品所屬館別'
 
+    def new_product_notice(self):
+        info_message = ''
+        if self.product.stock_pcs == 0:
+            # 刪除訂單,庫存從0變回有值則提示商品到貨
+            info_message = '有新商品(id:%d)到貨' % self.product.product_id
+        return info_message
+
     def save(self, *args, **kwargs):
+        this_product = self.product
+        # Order的更新要計算產品庫存
+        if self.is_delete == True:
+            this_product.stock_pcs += self.qty
+        else:
+            this_product.stock_pcs -= self.qty
+        this_product.save()
         super(Order, self).save(*args, **kwargs)

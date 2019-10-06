@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Umart{% endblock %}
+{% block title %} {{system_name}} {% endblock %}
 
 {% block content %}
+<h1>{{system_name}}訂購系統</h1>
 {% if error_message %}
 <div class="alert alert-danger" role="alert">
     {{ error_message }}
@@ -82,13 +83,21 @@
         {% endfor %}
     </tbody>
 </table>
-<h5>Top3產品列表</h5>
+<h5>Top3商品銷售量列表</h5>
 <table class="table">
-    {% for this_id in top_sell_id_list %}
-    <tr>
-        <td>第{{ forloop.counter }}名的銷售產品id: </td>
-        <td>{{ this_id }}</td>
-    </tr>
-    {% endfor %}
+    <thead class="thead-dark">
+        <tr>
+            <th>名次</th>
+            <th>商品id</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for this_id in top_sell_id_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ this_id }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

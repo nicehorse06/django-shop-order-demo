@@ -5,6 +5,7 @@ from django.views import View
 from celery import shared_task
 from django.db.models import Sum
 
+from shop_web.settings import system_name
 from .forms import OrderPostForm
 from .models import Product, Order
 
@@ -64,6 +65,7 @@ class OrderView(View):
             'top_sell_id_list': self.top_sell_id_list,
             'error_message': self.error_message,
             'info_message': self.info_message,
+            'system_name': system_name
         }
 
         return render(request, 'order.html', context)
@@ -82,10 +84,7 @@ class OrderView(View):
             )
             this_order.save()
 
-            # 計算庫存
-            this_product = this_order.product
-            this_product.stock_pcs -= this_order.qty
-            this_product.save()
+            self.info_message = '添加訂單成功'
 
         return self.get(request)
 
@@ -93,17 +92,11 @@ class OrderView(View):
         this_order_id = request.POST.get("order_id", "")
         this_delete_order = Order.objects.filter(id=this_order_id).first()
         if this_delete_order:
+            self.info_message = this_delete_order.new_product_notice()
+
             # 標記刪除的Order
             this_delete_order.is_delete = True
             this_delete_order.save()
-
-            # 計算庫存
-            this_product = this_delete_order.product
-            if this_product.stock_pcs == 0:
-                # 刪除訂單,庫存從0變回有值則提示商品到貨
-                self.info_message = '有新商品(id:%d)到貨' % this_product.product_id
-            this_product.stock_pcs += this_delete_order.qty
-            this_product.save()
 
             self.order_list = Order.objects.all()
             self.product_list = Product.objects.all()
