@@ -70,7 +70,7 @@ class Order(models.Model):
         info_message = ''
         if self.product.stock_pcs == 0:
             # 刪除訂單,庫存從0變回有值則提示商品到貨
-            info_message = '有新商品(id:%d)到貨' % self.product.product_id
+            info_message = '，有新商品(id:%d)到貨' % self.product.product_id
         return info_message
 
     def save(self, *args, **kwargs):

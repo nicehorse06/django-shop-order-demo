@@ -92,7 +92,8 @@ class OrderView(View):
         this_order_id = request.POST.get("order_id", "")
         this_delete_order = Order.objects.filter(id=this_order_id).first()
         if this_delete_order:
-            self.info_message = this_delete_order.new_product_notice()
+            self.info_message = '添加訂單取消成功'
+            self.info_message += this_delete_order.new_product_notice()
 
             # 標記刪除的Order
             this_delete_order.is_delete = True

@@ -16,17 +16,18 @@
 </div>
 {% endif %}
 
-<form action="." method="post">
-    {{ form }}
+
+<form class="order" method="post">
+    {{ form.as_p }}
     {% csrf_token %}
-    <input class='add' type="submit" value="+">
+    <input class='add' type="submit" value="+添加訂單">
 </form>
 
-<a href="{% url 'order_page:csv_export'%}" class="btn btn-primary">
-    <span>匯出廠別資料</span>
-</a>
-
-<h5>商品列表</h5>
+<h5>商品列表
+    <a href="{% url 'order_page:csv_export'%}" class="btn btn-warning">
+        <span>匯出廠別資料</span>
+    </a>
+</h5>
 <table class="table">
     <thead class="thead-dark">
         <tr>

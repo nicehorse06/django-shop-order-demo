@@ -6,8 +6,13 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    text-align: center;
+}
+
 h5 {
     text-align: center;
+    margin-top: 10px;
 }
 
 input[type=submit] {
@@ -19,12 +24,27 @@ input[type=submit] {
     color: #fff;
 }
 
-.add {
+input[type=submit].add {
     background-color: #007bff;
     border-color: #007bff;
+    width: 90px;
 }
 
-.cancel {
+input[type=submit].cancel {
     background-color: #dc3545;
     border-color: #dc3545;
+}
+
+form.order {
+    padding: 20px;
+    background-color: #d9fae1;
+}
+
+form.order p{
+    margin: 5px
+}
+
+a.btn {
+    padding: 2px 1px;
+    font-size: 11px;
 }
