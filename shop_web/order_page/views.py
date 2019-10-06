@@ -2,6 +2,8 @@ import csv
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from celery import shared_task
+
 from .forms import OrderPostForm
 from .models import Product, Order
 
@@ -108,8 +110,8 @@ class OrderView(View):
         return self.get(request)
 
 
-# todo 以下範例可下載csv，等celery設定成功，開始實做
-def some_view(request):
+@shared_task
+def csv_export(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
