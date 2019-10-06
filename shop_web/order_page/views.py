@@ -114,11 +114,12 @@ class OrderView(View):
 def csv_export(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    response['Content-Disposition'] = 'attachment; filename="shop_data.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C',
-                     '"Testing"', "Here's a quote"])
+    writer.writerow(['館別', '總銷售金額', '總銷售數量', '總訂單數量'])
+    writer.writerow(['test', '1', '2', '3'])
+    writer.writerow(['test2', '1', '2', '3'])
+    writer.writerow(['test3', '1', '2', '3'])
 
     return response
