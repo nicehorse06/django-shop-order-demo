@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 from celery import shared_task
+from django.db.models import Sum
 
 from .forms import OrderPostForm
 from .models import Product, Order
@@ -112,14 +113,23 @@ class OrderView(View):
 
 @shared_task
 def csv_export(request):
-    # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="shop_data.csv"'
 
     writer = csv.writer(response)
     writer.writerow(['館別', '總銷售金額', '總銷售數量', '總訂單數量'])
-    writer.writerow(['test', '1', '2', '3'])
-    writer.writerow(['test2', '1', '2', '3'])
-    writer.writerow(['test3', '1', '2', '3'])
+    shop_id_list = Product.objects.values_list('shop_id', flat=True).distinct()
+    for this_shop_id in shop_id_list:
+        this_order_query = Order.objects.filter(product__shop_id=this_shop_id)
+        total_sale_amount = 0
+        total_sale_number = 0
+        total_order_number = 0
+        for this_order in this_order_query:
+            total_sale_amount += this_order.qty * this_order.product.price
+            total_sale_number += this_order.qty
+            total_order_number += 1
+
+        writer.writerow([this_shop_id, total_sale_amount,
+                         total_sale_number, total_order_number])
 
     return response
