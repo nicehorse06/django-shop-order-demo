@@ -1,7 +1,5 @@
 # Django shop order demo
 
-* 如果在makemigrations時會出錯，需把urls.py裡面的view引入註解掉再執行
-    * todo 待解決
 * 目前celery_app吃不到settings裡面的資料，暫時把redis的設定寫死到裡面
     * todo
 
