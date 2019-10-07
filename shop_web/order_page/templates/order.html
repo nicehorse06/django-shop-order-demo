@@ -3,7 +3,7 @@
 {% block title %} {{system_name}} {% endblock %}
 
 {% block content %}
-<h1>{{system_name}}訂購系統</h1>
+<h1><i class="fas fa-cart-plus"></i>{{system_name}}訂購系統</h1>
 {% if error_message %}
 <div class="alert alert-danger" role="alert">
     {{ error_message }}
@@ -23,12 +23,12 @@
     <input class='add' type="submit" value="+添加訂單">
 </form>
 
-<h5>商品列表
+<h2>商品列表
     <a href="{% url 'order_page:csv_export'%}" class="btn btn-warning">
-        <span>匯出廠別資料</span>
+        <span><i class="fas fa-download"></i>匯出館別資料</span>
     </a>
-</h5>
-<table class="table">
+</h2>
+<table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>product_id</th>
@@ -45,13 +45,13 @@
             <td>{{ this_product.stock_pcs }}</td>
             <td>{{ this_product.price }}</td>
             <td>{{ this_product.shop_id }}</td>
-            <td>{{ this_product.vip }}</td>
+            <td>{% if this_product.vip %}V{% else %}X{% endif %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<h5>訂單紀錄列表</h5>
-<table class="table">
+<h2>訂單紀錄列表</h2>
+<table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>Order ID</th>
@@ -84,8 +84,8 @@
         {% endfor %}
     </tbody>
 </table>
-<h5>Top3商品銷售量列表</h5>
-<table class="table">
+<h2>Top3商品銷售量列表</h2>
+<table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>名次</th>

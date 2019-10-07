@@ -1,7 +1,7 @@
 /* 頁面整體 */
 body {
     margin: auto;
-    max-width: 80%;
+    max-width: 60%;
     font-size: 14px;
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -10,9 +10,9 @@ h1 {
     text-align: center;
 }
 
-h5 {
+h2 {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 input[type=submit] {
@@ -45,6 +45,6 @@ form.order p{
 }
 
 a.btn {
-    padding: 2px 1px;
-    font-size: 11px;
+    padding: 3px 2px;
+    font-size: 16px;
 }
