@@ -9,18 +9,14 @@
 * 啟動redis:`redis-server`
 * 啟動單元測試：`python manage.py test`
 
-## todo
-* UI 美化
-    * 一些必要的提示文字，比如欄位目前沒有資料
-    * 把input的說明塞到input裡面 
-* 使用docker佳
-* 部署至雲端服務佳
-* 單元測試
 
 ### todo中的todo
 * docker django hello world
 * 持續完成單元測試
 * 部屬GCP
+    * supervisor提供task和gunicorn服務
+* css匯入問題 參照[https://stackoverflow.com/questions/6014663/django-static-file-not-found]
+* task csv問題
 
 ### GCP
 * git
@@ -34,12 +30,12 @@
     * sudo apt-get install redis-server
 * gunicorn
     * pip install 
-    * `gunicorn -w 4 -b 127.0.0.1:8080 shop_web.wsgi:application –reload –max-requests 1`
+    * `sudo gunicorn -w 4 -b 127.0.0.1:8080 shop_web.wsgi:application –reload –max-requests 1`
 * supervisor
     * sudo apt install supervisor
 ```
 directory=/var/www/django-shop-order-demo/shop_web/
-command=gunicorn -w 4 -b 127.0.0.1:8080 shop_web.wsgi:application –reload –max-requests 1
+command=sudo gunicorn -w 4 -b 127.0.0.1:8080 shop_web.wsgi:application –reload –max-requests 1
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/django-shop-order-demo.err.log
@@ -48,3 +44,4 @@ stdout_logfile=/var/log/django-shop-order-demo.out.log
 
 ### Ref
 * [Testing in Django](https://docs.djangoproject.com/en/2.2/topics/testing/)
+* [Attempt to write a readonly database - Django w/ SELinux error](https://stackoverflow.com/questions/21054245/attempt-to-write-a-readonly-database-django-w-selinux-error)
