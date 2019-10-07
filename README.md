@@ -3,10 +3,11 @@
 * 目前celery_app吃不到settings裡面的資料，暫時把redis的設定寫死到裡面
     * todo
 
-### 初始化所有資料
-* `python manage.py loaddata */fixtures/initial_*`
+## 相關指令
+* 初始化product資料: `python manage.py loaddata */fixtures/initial_*`
 * celery: `python shop_web/celery_app.py `
 * 啟動redis:`redis-server`
+* 啟動單元測試：`python manage.py test`
 
 ## todo
 * UI 美化
@@ -18,5 +19,5 @@
 
 ### todo中的todo
 * docker django hello world
-* 單元測試hello world
+* 持續完成單元測試
 * 部屬GCP
