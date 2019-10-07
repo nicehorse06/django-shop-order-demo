@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['testserver']
 
 # 此訂購商店名稱
-system_name = 'Umart'
+system_name = 'UrMart'
 
 # Application definition
 
