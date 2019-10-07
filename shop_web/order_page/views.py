@@ -9,6 +9,7 @@ from shop_web.settings import system_name
 from .forms import OrderPostForm
 from .models import Product, Order
 
+
 def add_order_check(function):
     def decorator(*args, **kwargs):
         this_request = args[1]
@@ -70,6 +71,7 @@ class OrderView(View):
         self.error_message = kwargs.get('error_message', '')
         # 如果有錯誤訊息就不處理Order
         if not self.error_message:
+            # 從add_order_check取得參數
             cleaned_data = kwargs.get('cleaned_data', {})
             # 創建Order
             this_order = Order(
@@ -110,8 +112,11 @@ def csv_export(request):
     shop_id_list = Product.objects.values_list('shop_id', flat=True).distinct()
     for this_shop_id in shop_id_list:
         this_order_query = Order.objects.filter(product__shop_id=this_shop_id)
+        # 總銷售金額
         total_sale_amount = 0
+        # 總銷售數量
         total_sale_number = 0
+        # 總訂單數量
         total_order_number = 0
         for this_order in this_order_query:
             total_sale_amount += this_order.qty * this_order.product.price

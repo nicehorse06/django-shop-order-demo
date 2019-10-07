@@ -25,7 +25,7 @@ SECRET_KEY = 'or93l_w)%az+ll(^ouxq0(2b86f-%lowpl158u1!^eaih4npd#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
 
 # 此訂購商店名稱
 system_name = 'UrMart'
@@ -121,21 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
-
-# redis
-# -*- coding: utf-8 -*-
-BROKER_URL = 'redis://127.0.0.1:6379'               # 指定 Broker
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'  # 指定 Backend
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
