@@ -9,9 +9,6 @@ from shop_web.settings import system_name
 from .forms import OrderPostForm
 from .models import Product, Order
 
-# todo 完成decoraotr
-
-
 def add_order_check(function):
     def decorator(*args, **kwargs):
         this_request = args[1]
@@ -32,8 +29,6 @@ def add_order_check(function):
                 error_message = '訂購數量大於庫存量，貨源不足'
 
             kwargs['cleaned_data'] = cleaned_data
-
-        print(error_message)
 
         kwargs['error_message'] = error_message
 

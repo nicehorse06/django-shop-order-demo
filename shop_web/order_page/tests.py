@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Product, Order
+from shop_web.settings import system_name
 
 
 class ProductTestCase(TestCase):
@@ -38,10 +39,31 @@ class OrderTestCase(TestCase):
         """測試回傳數量前三大的方法"""
         pass
 
-        def test_new_product_notice(self):
-            """測試當庫存從零增加時，會有提示訊息"""
+    def test_new_product_notice(self):
+        """測試當庫存從零增加時，會有提示訊息"""
         pass
 
-        def test_save(self):
-            """確認庫存會因為Order而變化"""
+    def test_save(self):
+        """確認庫存會因為Order而變化"""
+        pass
+
+
+class UrlRouterTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_index_page(self):
+        """測試index_page"""
+        response = self.client.get('/')
+        data = response.content.decode()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(system_name, data)
+        self.assertIn('訂購系統', data)
+
+    def test_add_order(self):
+        """測試新增Order資料"""
+        pass
+
+    def test_delete_order(self):
+        """測試刪除Order資料"""
         pass

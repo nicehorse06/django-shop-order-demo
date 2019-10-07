@@ -21,3 +21,6 @@
 * docker django hello world
 * 持續完成單元測試
 * 部屬GCP
+
+### Ref
+* [Testing in Django](https://docs.djangoproject.com/en/2.2/topics/testing/)

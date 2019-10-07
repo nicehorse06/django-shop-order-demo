@@ -25,7 +25,7 @@ SECRET_KEY = 'or93l_w)%az+ll(^ouxq0(2b86f-%lowpl158u1!^eaih4npd#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testserver']
 
 # 此訂購商店名稱
 system_name = 'Umart'
