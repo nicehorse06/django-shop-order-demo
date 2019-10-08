@@ -1,13 +1,13 @@
 from celery import task
 from django.core.mail import send_mail
-from django.conf import settings
+from shop_web.settings import system_name, EMAIL_HOST_USER
 from django.template.loader import render_to_string
 from .models import Product, Order
 
 
 @task
-def send_email(recipient_email, recipient_name):
-    subject = '館別統計資料'
+def send_email(recipient_email):
+    subject = '%s館別統計資料' % system_name
     shop_id_list = Product.objects.values_list('shop_id', flat=True).distinct()
     shop_data_list = []
 
@@ -31,11 +31,11 @@ def send_email(recipient_email, recipient_name):
         })
     html_message = render_to_string(
         'shop_mail.html', {'shop_data_list': shop_data_list})
-    message = 'hello {}'.format(recipient_name)
+    message = 'hello user'
     mail_sent = send_mail(
         subject,
         message,
-        settings.EMAIL_HOST_USER,  # 寄件人的信箱
+        EMAIL_HOST_USER,  # 寄件人的信箱
         [recipient_email],  # 收件人的信箱
         html_message=html_message
     )

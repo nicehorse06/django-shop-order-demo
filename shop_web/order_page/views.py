@@ -2,12 +2,12 @@ import csv
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
-from celery import shared_task
 from django.db.models import Sum
 
 from shop_web.settings import system_name
-from .forms import OrderPostForm
+from .forms import OrderPostForm, ShopEmailForm
 from .models import Product, Order
+from .tasks import send_email
 
 
 def add_order_check(function):
@@ -45,17 +45,21 @@ class OrderView(View):
         self.info_message = ''
         self.error_message = ''
         self.form = OrderPostForm()
+        self.email_form = ShopEmailForm()
         self.product_list = Product.objects.all()
         self.order_list = Order.objects.all()
         self.top_sell_id_list = Order.objects.top()
         method = self.request.POST.get('_method', '').lower()
         if method == 'delete':
             return self.delete(request)
+        elif method == 'email':
+            return self.shop_email(request)
         return super(OrderView, self).dispatch(request)
 
     def get(self, request):
         context = {
             'form': self.form,
+            'email_form': self.email_form,
             'product_list': self.product_list,
             'order_list': self.order_list,
             'top_sell_id_list': self.top_sell_id_list,
@@ -101,29 +105,10 @@ class OrderView(View):
 
         return self.get(request)
 
-
-@shared_task
-def csv_export(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="shop_data.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['館別', '總銷售金額', '總銷售數量', '總訂單數量'])
-    shop_id_list = Product.objects.values_list('shop_id', flat=True).distinct()
-    for this_shop_id in shop_id_list:
-        this_order_query = Order.objects.filter(product__shop_id=this_shop_id)
-        # 總銷售金額
-        total_sale_amount = 0
-        # 總銷售數量
-        total_sale_number = 0
-        # 總訂單數量
-        total_order_number = 0
-        for this_order in this_order_query:
-            total_sale_amount += this_order.qty * this_order.product.price
-            total_sale_number += this_order.qty
-            total_order_number += 1
-
-        writer.writerow([this_shop_id, total_sale_amount,
-                         total_sale_number, total_order_number])
-
-    return response
+    # 發信功能，todo 可再多檢查
+    def shop_email(self, request):
+        this_form = ShopEmailForm(request.POST)
+        this_recipient_email = request.POST.get('recipient_email')
+        send_email.delay(this_recipient_email)
+        self.info_message = '郵件已發送!'
+        return self.get(request)

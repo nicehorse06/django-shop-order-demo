@@ -7,6 +7,7 @@ from celery.utils.log import get_task_logger
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shop_web.settings')
 
+# todo 改為用此方法
 # app = Celery('shop_web')
 
 # 指定消息中間件用 redis，URL 為 redis://127.0.0.1:6379

@@ -23,11 +23,14 @@
     <input class='add' type="submit" value="+添加訂單">
 </form>
 
-<h2>商品列表
-    <a href="{% url 'order_page:csv_export'%}" class="btn btn-warning">
-        <span><i class="fas fa-download"></i>匯出館別資料</span>
-    </a>
-</h2>
+<form class="order" method="post">
+    {{ email_form.as_p }}
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="email">
+    <input class='email' type="submit" value="發送館別資料">
+</form>
+
+<h2>商品列表</h2>
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>

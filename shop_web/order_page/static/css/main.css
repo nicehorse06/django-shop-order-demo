@@ -18,7 +18,7 @@ h2 {
 input[type=submit] {
     border-radius: 5px;
     border: 0;
-    width: 25px;
+    width: 90px;
     height:25px;
     font-family: Tahoma;
     color: #fff;
@@ -27,12 +27,18 @@ input[type=submit] {
 input[type=submit].add {
     background-color: #007bff;
     border-color: #007bff;
-    width: 90px;
 }
 
 input[type=submit].cancel {
     background-color: #dc3545;
     border-color: #dc3545;
+    width: 25px;
+}
+
+input[type=submit].email {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    width: 100px;
 }
 
 form.order {

@@ -20,3 +20,7 @@ class OrderPostForm(forms.Form):
             choices_value.extend(Product.objects.values_list(
                 'product_id', 'product_id'))
             this_field.choices = choices_value
+
+
+class ShopEmailForm(forms.Form):
+    recipient_email = forms.EmailField(required=True, label=u'收件email')
