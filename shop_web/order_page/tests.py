@@ -33,7 +33,17 @@ class OrderTestCase(TestCase):
 
     def test_filter_is_delete(self):
         """測試Order被刪除的項不會顯示"""
-        pass
+        this_product = Product.objects.create(
+            vip=False, stock_pcs=2, price=1, shop_id='um')
+        this_is_delete_order = Order.objects.create(
+            is_delete=True, product=this_product, qty=1, customer_id=1)
+
+        self.assertEqual(Order.objects.count(), 0)
+
+        this_not_delete_order = Order.objects.create(
+            is_delete=False, product=this_product, qty=1, customer_id=1)
+
+        self.assertEqual(Order.objects.count(), 1)
 
     def test_top(self):
         """測試回傳數量前三大的方法"""
