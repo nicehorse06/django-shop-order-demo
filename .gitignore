@@ -92,5 +92,8 @@ db.sqlite3
 !/**/migrations/__init__.py
 /**/*sqlite3.db
 
-celerybeat-schedule
 dump.rdb
+
+celerybeat-schedule*
+
+settings_local.py
