@@ -1,12 +1,20 @@
 # Django shop order demo
 
-## 相關指令
-* 初始化product資料: `python manage.py loaddata */fixtures/initial_*`
-* celery: `python shop_web/celery_app.py `
-* 啟動redis:`redis-server`
-* 啟動單元測試：`python manage.py test`
+* python版本為3.6.8
+* Django版本為2.2.6
 
-### GCP
+## 開發使用流程
+* 建立virtualenv
+* 執行 `pip install -r requirement`
+* 執行 `python manage.py makemigrations`
+* 執行 `python manage.py migrate`
+* 執行 `python manage.py loaddata */fixtures/initial_*` 初始化product資料
+* 執行 `python manage.py runserver` 啟動測試 server
+* 裝redis當作celery的broker，執行`python shop_web/celery_app.py `啟動celery
+* 在settings填上發信的寄件人資訊
+* 單元測試：`python manage.py test`
+
+### GCP佈署簡易流程
 * git
 * sudo apt install python3-pip
 * pip install -r
