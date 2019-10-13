@@ -39,6 +39,12 @@ stderr_logfile=/var/log/django-shop-order-demo.err.log
 stdout_logfile=/var/log/django-shop-order-demo.out.log
 ```   
 
+### GCP 重啟指令筆記
+* nginx 自動重啟
+* redis 自動重啟
+* sudo supervisord -c /etc/supervisor/supervisord.conf
+* sudo supervisord -c /etc/supervisor/celeryd.conf
+
 ### Ref
 * [Testing in Django](https://docs.djangoproject.com/en/2.2/topics/testing/)
 * [Attempt to write a readonly database - Django w/ SELinux error](https://stackoverflow.com/questions/21054245/attempt-to-write-a-readonly-database-django-w-selinux-error)
