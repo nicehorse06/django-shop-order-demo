@@ -47,7 +47,30 @@ class OrderTestCase(TestCase):
 
     def test_top(self):
         """測試回傳數量前三大的方法"""
-        pass
+        this_product1 = Product.objects.create(
+            product_id=1, vip=False, stock_pcs=10, price=1, shop_id='um')
+        this_product2 = Product.objects.create(
+            product_id=2, vip=False, stock_pcs=10, price=1, shop_id='um')
+        this_product3 = Product.objects.create(
+            product_id=3, vip=False, stock_pcs=10, price=1, shop_id='um')
+        this_product4 = Product.objects.create(
+            product_id=4, vip=False, stock_pcs=10, price=1, shop_id='um')
+        Order.objects.create(product_id=1, qty=5, customer_id=1)
+        # this_order1_2 = Order.objects.create(
+        #     product_id=1, qty=2, customer_id=2)
+        # this_order1_3 = Order.objects.create(
+        #     product_id=1, qty=3, customer_id=1)
+        Order.objects.create(product_id=2, qty=4, customer_id=1)
+        # this_order2_2 = Order.objects.create(
+        #     product_id=2, qty=1, customer_id=1)
+        Order.objects.create(product_id=3, qty=3, customer_id=1)
+        Order.objects.create(product_id=4, qty=2, customer_id=1)
+
+        # todo 待加上多個order一起計算的測試
+        top_query = Order.objects.top()
+        self.assertEqual(top_query[0], 1)
+        self.assertEqual(top_query[1], 2)
+        self.assertEqual(top_query[2], 3)
 
     def test_new_product_notice(self):
         """測試當庫存從零增加時，會有提示訊息"""
