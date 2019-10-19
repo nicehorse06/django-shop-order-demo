@@ -55,9 +55,10 @@ stdout_logfile=/var/log/django-shop-order-demo.out.log
 * sudo supervisord -c /etc/supervisor/supervisord.conf
 * sudo supervisord -c /etc/supervisor/celeryd.conf
 
-### Ref
+### 參考資料
 * [Testing in Django](https://docs.djangoproject.com/en/2.2/topics/testing/)
 * [Attempt to write a readonly database - Django w/ SELinux error](https://stackoverflow.com/questions/21054245/attempt-to-write-a-readonly-database-django-w-selinux-error)
 * [使用 supervisor 管理进程](http://liyangliang.me/posts/2015/06/using-supervisor/)
 * [docker-django-celery-tutorial](https://github.com/twtrubiks/docker-django-celery-tutorial)
 * [Django + Celery + Redis + Gmail 實現異步寄信](https://medium.com/@zoejoyuliao/django-celery-redis-gmail-%E5%AF%84%E4%BF%A1-375904d4224c)
+* [查看 Linux TCP Port 被哪隻程式(Process)佔用](https://blog.longwin.com.tw/2013/12/linux-port-process-check-2013/)
