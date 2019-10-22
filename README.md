@@ -3,6 +3,16 @@
 * python版本為3.6.8
 * Django版本為2.2.6
 
+
+## 功能說明:
+* DB儲存商品列表和訂單紀錄
+* 網頁顯示商品列表和訂單紀錄和前三受歡迎商品的表格
+* 有訂單的建立和移除功能，會反應在商品的庫存
+* 可輸入mail，會有celery task把館別的統計資料寄到該信箱
+* 有基本的新增刪除提醒，包含庫存從0便有的商品到貨通知和庫存不足與vip限制的警告
+* 有單元測試在app的test.py中，由於時間因素覆蓋率沒有很高，時間越往後，我會加上越多測試案例
+
+
 ## 開發使用流程
 * 建立virtualenv
 * 執行 `pip install -r requirement`
@@ -46,9 +56,10 @@ stdout_logfile=/var/log/django-shop-order-demo.out.log
 * sudo supervisord -c /etc/supervisor/supervisord.conf
 * sudo supervisord -c /etc/supervisor/celeryd.conf
 
-### Ref
+### 參考資料
 * [Testing in Django](https://docs.djangoproject.com/en/2.2/topics/testing/)
 * [Attempt to write a readonly database - Django w/ SELinux error](https://stackoverflow.com/questions/21054245/attempt-to-write-a-readonly-database-django-w-selinux-error)
 * [使用 supervisor 管理进程](http://liyangliang.me/posts/2015/06/using-supervisor/)
 * [docker-django-celery-tutorial](https://github.com/twtrubiks/docker-django-celery-tutorial)
 * [Django + Celery + Redis + Gmail 實現異步寄信](https://medium.com/@zoejoyuliao/django-celery-redis-gmail-%E5%AF%84%E4%BF%A1-375904d4224c)
+* [查看 Linux TCP Port 被哪隻程式(Process)佔用](https://blog.longwin.com.tw/2013/12/linux-port-process-check-2013/)
