@@ -13,6 +13,7 @@
 * 裝redis當作celery的broker，執行`python shop_web/celery_app.py `啟動celery
 * 在settings填上發信的寄件人資訊
 * 單元測試：`python manage.py test`
+    * selenium需下載driver才能使用，參閱[Selenium Client Driver](https://seleniumhq.github.io/selenium/docs/api/py/)
 
 ### GCP佈署簡易流程
 * git

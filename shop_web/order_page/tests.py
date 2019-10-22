@@ -1,7 +1,10 @@
 from django.test import TestCase
 from .models import Product, Order
 from shop_web.settings import system_name
+from selenium import webdriver
 
+# 測試的網址，可依據django起的環境更改
+test_url = 'http://127.0.0.1:8000/'
 
 class ProductTestCase(TestCase):
     def setUp(self):
@@ -100,3 +103,16 @@ class UrlRouterTestCase(TestCase):
     def test_delete_order(self):
         """測試刪除Order資料"""
         pass
+
+# 注意Selenium測試需要下載Firefox driver
+class SeleniumTestCase(TestCase):
+    def setUp(self):
+        # 設定開啟Firefox
+        self.browser = webdriver.Firefox()
+        # 結束測試關閉瀏覽器
+        self.addCleanup(self.browser.quit)
+
+    def test_index_page(self):
+        # 開啟目標網址
+        self.browser.get(test_url)
+        self.assertIn(system_name, self.browser.title)
