@@ -1,7 +1,7 @@
 # Django shop order demo
 
 * python版本為3.6.8
-* Django版本為2.2.6
+* Django版本為2.2.8
 
 
 ## 功能說明:
