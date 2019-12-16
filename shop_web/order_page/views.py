@@ -133,9 +133,9 @@ class OrderView(View):
                         login(request, user)
                         self.info_message = '登入成功!'
                     else:
-                        self.info_message = '無效的帳號!'
+                        self.error_message = '無效的帳號!'
                 else:
-                    self.info_message = '帳號或密碼錯誤!'
+                    self.error_message = '帳號或密碼錯誤!'
 
         else:
             self.info_message = '請登入!'
