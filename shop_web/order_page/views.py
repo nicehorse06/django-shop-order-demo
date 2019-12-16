@@ -1,11 +1,12 @@
 import csv
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse  
 from django.http import HttpResponse
 from django.views import View
 from django.db.models import Sum
+from django.contrib.auth import authenticate, login, logout
 
 from shop_web.settings import system_name
-from .forms import OrderPostForm, ShopEmailForm
+from .forms import OrderPostForm, ShopEmailForm, LoginForm
 from .models import Product, Order
 from .tasks import send_email
 
@@ -44,8 +45,9 @@ class OrderView(View):
     def dispatch(self, request):
         self.info_message = ''
         self.error_message = ''
-        self.form = OrderPostForm()
+        self.order_form = OrderPostForm()
         self.email_form = ShopEmailForm()
+        self.login_form = LoginForm()
         self.product_list = Product.objects.all()
         self.order_list = Order.objects.all()
         self.top_sell_id_list = Order.objects.top()
@@ -54,12 +56,17 @@ class OrderView(View):
             return self.delete(request)
         elif method == 'email':
             return self.shop_email(request)
+        elif method == 'login':
+            return self.user_login(request)
+        elif method == 'logout':
+            return self.user_logout(request)
         return super(OrderView, self).dispatch(request)
 
     def get(self, request):
         context = {
-            'form': self.form,
+            'order_form': self.order_form,
             'email_form': self.email_form,
+            'login_form': self.login_form,
             'product_list': self.product_list,
             'order_list': self.order_list,
             'top_sell_id_list': self.top_sell_id_list,
@@ -111,4 +118,32 @@ class OrderView(View):
         this_recipient_email = request.POST.get('recipient_email')
         send_email.delay(this_recipient_email)
         self.info_message = '郵件已發送!'
+        return self.get(request)
+
+    def user_login(self, request):
+        if request.method == "POST":
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                # authenticate功能為查詢使用者
+                user = authenticate(request, username=cd['username'], password=cd['password'])
+                if user is not None:
+                    if user.is_active:
+                        # login功能為在session中登入使用者
+                        login(request, user)
+                        self.info_message = '登入成功!'
+                    else:
+                        self.info_message = '無效的帳號!'
+                else:
+                    self.info_message = '帳號或密碼錯誤!'
+
+        else:
+            self.info_message = '請登入!'
+
+        return self.get(request)
+
+    def user_logout(self, request):
+        logout(request)
+        self.info_message = '登出成功!'
+
         return self.get(request)

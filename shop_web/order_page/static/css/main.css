@@ -41,12 +41,23 @@ input[type=submit].email {
     width: 100px;
 }
 
-form.order {
+input[type=submit].login, input[type=submit].logout {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    width: 100px;
+}
+
+div.form {
     padding: 20px;
     background-color: #d9fae1;
 }
 
-form.order p{
+div.form > form {
+    padding: 10px 0px;
+    border-bottom: 3px #afccb6 dashed;
+}
+
+div.form > form p{
     margin: 5px
 }
 

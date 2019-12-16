@@ -24,3 +24,7 @@ class OrderPostForm(forms.Form):
 
 class ShopEmailForm(forms.Form):
     recipient_email = forms.EmailField(required=True, label=u'收件email')
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

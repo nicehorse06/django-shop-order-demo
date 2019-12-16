@@ -16,19 +16,34 @@
 </div>
 {% endif %}
 
+<div class="form">
+    {% if request.user.is_authenticated %}
+    <form method="post">
+        {{ order_form.as_p }}
+        {% csrf_token %}
+        <input class='add' type="submit" value="+添加訂單">
+    </form>
 
-<form class="order" method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <input class='add' type="submit" value="+添加訂單">
-</form>
-
-<form class="order" method="post">
-    {{ email_form.as_p }}
-    {% csrf_token %}
-    <input type="hidden" name="_method" value="email">
-    <input class='email' type="submit" value="發送館別資料">
-</form>
+    <form method="post">
+        {{ email_form.as_p }}
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="email">
+        <input class='email' type="submit" value="發送館別資料">
+    </form>
+    <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="_method" value="logout">
+            <input class='logout' type="submit" value="管理者登出">
+    </form>
+    {% else %}
+    <form method="post">
+        {{ login_form.as_p }}
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="login">
+        <input class='login' type="submit" value="管理者登入">
+    </form>
+    {% endif %}
+</div>
 
 <h2>商品列表</h2>
 <table class="table table-bordered">
@@ -76,12 +91,14 @@
             <td>{{ this_order.product.shop_id }}</td>
             <td>{{ this_order.customer_id }}</td>
             <td>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="_method" value="delete">
-                    <input type="hidden" id="order_id" name="order_id" value={{ this_order.id }}>
-                    <input class='cancel' type="submit" value="-">
-                </form>
+                {% if request.user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" id="order_id" name="order_id" value={{ this_order.id }}>
+                        <input class='cancel' type="submit" value="-">
+                    </form>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
